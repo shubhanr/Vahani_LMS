@@ -9,12 +9,14 @@ import Field from "../components/Field";
 import Icon from "../components/Icon";
 import Bar from "../components/Bar";
 import Pill from "../components/Pill";
+import AssignmentDetail from "./AssignmentDetail";
 
 
 function AssignmentsPage({ role }) {
   const [showForm,setShowForm]=useState(false);
   const [dueDateFilter,setDueDateFilter]=useState("All");
   const [programmeFilter,setProgrammeFilter]=useState("All");
+  const [selectedAssignmentId,setSelectedAssignmentId]=useState(null);
 
   const programmes=["All",...new Set(ASSIGNMENTS.map(a=>a.programme))];
 
@@ -40,6 +42,10 @@ function AssignmentsPage({ role }) {
     const programmeMatch=programmeFilter==="All"||a.programme===programmeFilter;
     return dueDateMatch&&programmeMatch;
   });
+
+  if(selectedAssignmentId){
+    return <AssignmentDetail assignmentId={selectedAssignmentId} role={role} onBack={()=>setSelectedAssignmentId(null)}/>;
+  }
 
   return (
     <div style={{padding:32}}>
@@ -92,7 +98,7 @@ function AssignmentsPage({ role }) {
           const pct=Math.round(a.submitted/a.total*100);
           return (
             <Card key={a.id}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:20}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:20,flexWrap:"wrap"}}>
                 <div style={{flex:1}}>
                   <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:6}}>
                     <div style={{width:38,height:38,borderRadius:10,background:`${T.navy}10`,
@@ -114,8 +120,12 @@ function AssignmentsPage({ role }) {
                     </div>
                   )}
                 </div>
-                <div style={{display:"flex",gap:8,alignItems:"center",flexShrink:0}}>
+                <div style={{display:"flex",gap:8,alignItems:"center",justifyContent:"flex-end",flexShrink:0,flexWrap:"wrap"}}>
                   <Pill label={a.status} v={a.status==="Open"?"success":"default"}/>
+                  <button onClick={()=>setSelectedAssignmentId(a.id)} style={{display:"flex",alignItems:"center",gap:5,padding:"8px 16px",
+                    background:T.white,color:T.navy,border:`1.5px solid ${T.border}`,borderRadius:8,cursor:"pointer",fontSize:12,fontWeight:600,fontFamily:"'DM Sans',sans-serif"}}>
+                    <Icon name="eye" size={12} color={T.navy}/> View
+                  </button>
                   {role!=="scholar"&&<button style={{display:"flex",alignItems:"center",gap:5,padding:"8px 16px",
                     background:T.navy,color:T.white,border:"none",borderRadius:8,cursor:"pointer",fontSize:12,fontWeight:600,fontFamily:"'DM Sans',sans-serif"}}>
                     <Icon name="pencil" size={12} color={T.white}/> Grade
