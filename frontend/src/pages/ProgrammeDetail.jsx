@@ -4,13 +4,25 @@ import { PROGRAMMES, ASSIGNMENTS, RESOURCES, SCHOLARS } from "../data/data";
 import englishCommImage from "../assets/speaking_the_english_why_english_is_so_difficult_to_learn_featured.jpg";
 import Icon from "../components/Icon";
 import Card from "../components/Card";
+import AssignmentDetail from "./AssignmentDetail";
 
-function ProgrammeDetail({ programmeId, onBack }) {
+function ProgrammeDetail({ programmeId, onBack, role }) {
   const programme = PROGRAMMES.find(p => p.id === programmeId);
   const [activeTab, setActiveTab] = useState("posts");
   const [postText, setPostText] = useState("");
+  const [selectedAssignmentId, setSelectedAssignmentId] = useState(null);
 
   if (!programme) return null;
+
+  if (selectedAssignmentId) {
+    return (
+      <AssignmentDetail
+        assignmentId={selectedAssignmentId}
+        role={role}
+        onBack={() => setSelectedAssignmentId(null)}
+      />
+    );
+  }
 
   const programmeAssignments = ASSIGNMENTS.filter(a => a.programme === programme.name);
   const programmeResources = RESOURCES.filter(r => r.programme === programme.name);
@@ -174,7 +186,9 @@ function ProgrammeDetail({ programmeId, onBack }) {
                     fontSize: 12,
                     fontWeight: 600,
                     fontFamily: "'DM Sans',sans-serif"
-                  }}>
+                  }}
+                  onClick={() => setSelectedAssignmentId(assignment.id)}
+                  >
                     View
                   </button>
                 </div>

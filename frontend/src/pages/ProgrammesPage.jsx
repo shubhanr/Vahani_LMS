@@ -13,7 +13,7 @@ function ProgrammesPage({ role }) {
   const [selectedProgrammeId, setSelectedProgrammeId] = useState(null);
 
   if (selectedProgrammeId) {
-    return <ProgrammeDetail programmeId={selectedProgrammeId} onBack={() => setSelectedProgrammeId(null)} />;
+    return <ProgrammeDetail programmeId={selectedProgrammeId} role={role} onBack={() => setSelectedProgrammeId(null)} />;
   }
   return (
     <div style={{padding:32}}>

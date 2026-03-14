@@ -130,11 +130,6 @@ function AssignmentsPage({ role }) {
                     background:T.navy,color:T.white,border:"none",borderRadius:8,cursor:"pointer",fontSize:12,fontWeight:600,fontFamily:"'DM Sans',sans-serif"}}>
                     <Icon name="pencil" size={12} color={T.white}/> Grade
                   </button>}
-                  {role==="scholar"&&a.status==="Open"&&<button style={{display:"flex",alignItems:"center",gap:5,
-                    padding:"8px 16px",background:T.sun,color:T.navyD,border:"none",borderRadius:8,
-                    cursor:"pointer",fontSize:12,fontWeight:700,fontFamily:"'DM Sans',sans-serif"}}>
-                    <Icon name="upload" size={12} color={T.navyD}/> Submit
-                  </button>}
                 </div>
               </div>
             </Card>
